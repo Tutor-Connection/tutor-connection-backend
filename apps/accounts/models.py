@@ -15,6 +15,15 @@ class Accounts(models.Model):
     updated_at = models.DateTimeField(blank=True, null=True)
     deleted_at = models.DateTimeField(blank=True, null=True)
 
+
+    @property
+    def is_authenticated(self):
+        return True
+
+    @property
+    def is_anonymous(self):
+        return False
+    
     class Meta:
         managed = False
         db_table = 'accounts'
@@ -87,7 +96,7 @@ class TutorProfiles(models.Model):
 
 class KycDocuments(models.Model):
     id = models.BigAutoField(primary_key=True)
-    user = models.ForeignKey('Users', models.DO_NOTHING)
+    user = models.ForeignKey('accounts.Users', models.DO_NOTHING)
     document_type = models.CharField(max_length=30)
     file_url = models.TextField()
     status = models.CharField(max_length=20, blank=True, null=True)
@@ -101,7 +110,7 @@ class KycDocuments(models.Model):
 
 class SystemLogs(models.Model):
     id = models.BigAutoField(primary_key=True)
-    user = models.ForeignKey('Users', models.DO_NOTHING, blank=True, null=True)
+    user = models.ForeignKey('accounts.Users', models.DO_NOTHING, blank=True, null=True)
     action = models.CharField(max_length=255)
     module = models.CharField(max_length=100)
     description = models.TextField(blank=True, null=True)

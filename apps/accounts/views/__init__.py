@@ -1,0 +1,1 @@
+from .auth_views import RegisterView, LoginView, LogoutView, RefreshTokenView,    ForgotPasswordView, ResetPasswordView, ChangePasswordView,SendEmailVerificationView, VerifyEmailView,SendPhoneOtpView, VerifyPhoneOtpView

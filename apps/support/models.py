@@ -4,7 +4,7 @@ from django.db import models
 
 class SupportTickets(models.Model):
     id = models.BigAutoField(primary_key=True)
-    user = models.ForeignKey('Users', models.DO_NOTHING)
+    user = models.ForeignKey('accounts.Users', models.DO_NOTHING)
     title = models.CharField(max_length=255)
     description = models.TextField()
     attachment_url = models.TextField(blank=True, null=True)
@@ -21,7 +21,7 @@ class SupportTickets(models.Model):
 class TicketMessages(models.Model):
     id = models.BigAutoField(primary_key=True)
     ticket = models.ForeignKey(SupportTickets, models.DO_NOTHING)
-    sender = models.ForeignKey('Users', models.DO_NOTHING)
+    sender = models.ForeignKey('accounts.Users', models.DO_NOTHING)
     message = models.TextField()
     created_at = models.DateTimeField(blank=True, null=True)
 
