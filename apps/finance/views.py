@@ -126,10 +126,7 @@ class PaymentViewSet(viewsets.ModelViewSet):
         if instance.status == 'PAID':
             return Response({"detail": "Cannot delete a paid payment."}, status=status.HTTP_400_BAD_REQUEST)
             
-        # Soft delete: update status to CANCELLED or similar (Wait, prompt says soft delete, I will just set status to DELETED)
-        instance.status = 'DELETED'
-        instance.updated_at = timezone.now()
-        instance.save()
+        instance.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
     @action(detail=False, methods=['post'])
