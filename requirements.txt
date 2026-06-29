@@ -1,0 +1,5 @@
+djangorestframework
+djangorestframework-simplejwt
+python-decouple
+Pillow
+google-auth
