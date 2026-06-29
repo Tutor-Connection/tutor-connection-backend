@@ -29,7 +29,7 @@ class Subjects(models.Model):
 
 class TutorSubjects(models.Model):
     pk = models.CompositePrimaryKey('tutor_id', 'subject_id')
-    tutor = models.ForeignKey("tutoring.TutorProfiles", models.DO_NOTHING)
+    tutor = models.ForeignKey("accounts.TutorProfiles", models.DO_NOTHING)
     subject = models.ForeignKey(Subjects, models.DO_NOTHING)
     created_at = models.DateTimeField(blank=True, null=True)
 
@@ -39,7 +39,7 @@ class TutorSubjects(models.Model):
 
 class StudentPosts(models.Model):
     id = models.BigAutoField(primary_key=True)
-    student = models.ForeignKey('StudentProfiles', models.DO_NOTHING)
+    student = models.ForeignKey('accounts.StudentProfiles', models.DO_NOTHING)
     subject = models.ForeignKey('Subjects', models.DO_NOTHING)
     title = models.CharField(max_length=255)
     description = models.TextField()
@@ -60,7 +60,7 @@ class StudentPosts(models.Model):
 class TutorApplications(models.Model):
     id = models.BigAutoField(primary_key=True)
     post = models.ForeignKey(StudentPosts, models.DO_NOTHING)
-    tutor = models.ForeignKey('TutorProfiles', models.DO_NOTHING)
+    tutor = models.ForeignKey('accounts.TutorProfiles', models.DO_NOTHING)
     status = models.CharField(max_length=20, blank=True, null=True)
     applied_at = models.DateTimeField(blank=True, null=True)
 
@@ -71,8 +71,8 @@ class TutorApplications(models.Model):
 
 class Classes(models.Model):
     id = models.BigAutoField(primary_key=True)
-    tutor = models.ForeignKey('TutorProfiles', models.DO_NOTHING)
-    student = models.ForeignKey('StudentProfiles', models.DO_NOTHING)
+    tutor = models.ForeignKey('accounts.TutorProfiles', models.DO_NOTHING)
+    student = models.ForeignKey('accounts.StudentProfiles', models.DO_NOTHING)
     subject = models.ForeignKey('Subjects', models.DO_NOTHING)
     start_date = models.DateField()
     end_date = models.DateField(blank=True, null=True)
@@ -88,8 +88,8 @@ class Classes(models.Model):
 class Schedules(models.Model):
     id = models.BigAutoField(primary_key=True)
     class_field = models.ForeignKey(Classes, models.DO_NOTHING, db_column='class_id')  
-    tutor = models.ForeignKey('TutorProfiles', models.DO_NOTHING)
-    student = models.ForeignKey('StudentProfiles', models.DO_NOTHING)
+    tutor = models.ForeignKey('accounts.TutorProfiles', models.DO_NOTHING)
+    student = models.ForeignKey('accounts.StudentProfiles', models.DO_NOTHING)
     start_time = models.DateTimeField()
     end_time = models.DateTimeField()
     status = models.CharField(max_length=20, blank=True, null=True)
@@ -104,7 +104,7 @@ class Schedules(models.Model):
 class ReviewReports(models.Model):
     id = models.BigAutoField(primary_key=True)
     review = models.ForeignKey('Reviews', models.DO_NOTHING)
-    reporter = models.ForeignKey('Users', models.DO_NOTHING)
+    reporter = models.ForeignKey('accounts.Users', models.DO_NOTHING)
     reason = models.TextField()
     status = models.CharField(max_length=20, blank=True, null=True)
     created_at = models.DateTimeField(blank=True, null=True)
@@ -116,8 +116,8 @@ class ReviewReports(models.Model):
 
 class Reviews(models.Model):
     id = models.BigAutoField(primary_key=True)
-    tutor = models.ForeignKey('TutorProfiles', models.DO_NOTHING)
-    student = models.ForeignKey('StudentProfiles', models.DO_NOTHING)
+    tutor = models.ForeignKey('accounts.TutorProfiles', models.DO_NOTHING)
+    student = models.ForeignKey('accounts.StudentProfiles', models.DO_NOTHING)
     class_field = models.ForeignKey(Classes, models.DO_NOTHING, db_column='class_id') 
     rating = models.IntegerField()
     content = models.TextField(blank=True, null=True)
@@ -132,8 +132,8 @@ class Reviews(models.Model):
 
 class AiMatchingLogs(models.Model):
     id = models.BigAutoField(primary_key=True)
-    tutor = models.ForeignKey('TutorProfiles', models.DO_NOTHING, blank=True, null=True)
-    student = models.ForeignKey('StudentProfiles', models.DO_NOTHING, blank=True, null=True)
+    tutor = models.ForeignKey('accounts.TutorProfiles', models.DO_NOTHING, blank=True, null=True)
+    student = models.ForeignKey('accounts.StudentProfiles', models.DO_NOTHING, blank=True, null=True)
     post = models.ForeignKey('StudentPosts', models.DO_NOTHING, blank=True, null=True)
     matching_score = models.DecimalField(max_digits=5, decimal_places=2)
     distance_score = models.DecimalField(max_digits=5, decimal_places=2, blank=True, null=True)
