@@ -11,6 +11,10 @@ class WalletTransactions(models.Model):
     status = models.CharField(max_length=20, blank=True, null=True)
     created_at = models.DateTimeField(blank=True, null=True)
 
+    bank_name = models.CharField(max_length=100, blank=True, null=True)
+    bank_account = models.CharField(max_length=100, blank=True, null=True)
+    bank_owner = models.CharField(max_length=100, blank=True, null=True)
+
     class Meta:
         managed = False
         db_table = 'wallet_transactions'
@@ -18,7 +22,7 @@ class WalletTransactions(models.Model):
 
 class Wallets(models.Model):
     id = models.BigAutoField(primary_key=True)
-    user = models.OneToOneField("accounts.User", models.DO_NOTHING)
+    user = models.OneToOneField("accounts.Users", models.DO_NOTHING)
     balance = models.DecimalField(max_digits=12, decimal_places=2, blank=True, null=True)
     status = models.CharField(max_length=20, blank=True, null=True)
     created_at = models.DateTimeField(blank=True, null=True)
@@ -31,7 +35,7 @@ class Wallets(models.Model):
 class Commissions(models.Model):
     id = models.BigAutoField(primary_key=True)
     class_field = models.ForeignKey("tutoring.Classes", models.DO_NOTHING, db_column='class_id') 
-    tutor = models.ForeignKey('TutorProfiles', models.DO_NOTHING)
+    tutor = models.ForeignKey('accounts.TutorProfiles', models.DO_NOTHING)
     percentage = models.DecimalField(max_digits=5, decimal_places=2)
     amount = models.DecimalField(max_digits=12, decimal_places=2)
     due_date = models.DateField()
@@ -47,8 +51,8 @@ class Commissions(models.Model):
 class Payments(models.Model):
     id = models.BigAutoField(primary_key=True)
     class_field = models.ForeignKey("tutoring.Classes", models.DO_NOTHING, db_column='class_id') 
-    tutor = models.ForeignKey('TutorProfiles', models.DO_NOTHING)
-    student = models.ForeignKey('StudentProfiles', models.DO_NOTHING)
+    tutor = models.ForeignKey('accounts.TutorProfiles', models.DO_NOTHING)
+    student = models.ForeignKey('accounts.StudentProfiles', models.DO_NOTHING)
     amount = models.DecimalField(max_digits=12, decimal_places=2)
     due_date = models.DateField()
     tutor_confirmed = models.BooleanField(blank=True, null=True)
@@ -56,6 +60,8 @@ class Payments(models.Model):
     status = models.CharField(max_length=20, blank=True, null=True)
     created_at = models.DateTimeField(blank=True, null=True)
     updated_at = models.DateTimeField(blank=True, null=True)
+
+    payment_method = models.CharField(max_length=50, blank=True, null=True)
 
     class Meta:
         managed = False

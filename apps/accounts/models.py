@@ -22,7 +22,7 @@ class Accounts(models.Model):
 
 class AdminProfiles(models.Model):
     id = models.BigAutoField(primary_key=True)
-    user = models.OneToOneField('Users', models.DO_NOTHING)
+    user = models.OneToOneField('accounts.Users', models.DO_NOTHING)
     department = models.CharField(max_length=100, blank=True, null=True)
     created_at = models.DateTimeField(blank=True, null=True)
 
@@ -53,7 +53,7 @@ class Users(models.Model):
 
 class StudentProfiles(models.Model):
     id = models.BigAutoField(primary_key=True)
-    user = models.OneToOneField('Users', models.DO_NOTHING)
+    user = models.OneToOneField('accounts.Users', models.DO_NOTHING)
     grade = models.CharField(max_length=20)
     parent_name = models.CharField(max_length=255, blank=True, null=True)
     parent_phone = models.CharField(max_length=20, blank=True, null=True)
@@ -67,7 +67,7 @@ class StudentProfiles(models.Model):
 
 class TutorProfiles(models.Model):
     id = models.BigAutoField(primary_key=True)
-    user = models.OneToOneField('Users', models.DO_NOTHING)
+    user = models.OneToOneField('accounts.Users', models.DO_NOTHING)
     experience_years = models.IntegerField(blank=True, null=True)
     teaching_fee = models.DecimalField(max_digits=12, decimal_places=2)
     rating_avg = models.DecimalField(max_digits=3, decimal_places=2, blank=True, null=True)
@@ -87,7 +87,7 @@ class TutorProfiles(models.Model):
 
 class KycDocuments(models.Model):
     id = models.BigAutoField(primary_key=True)
-    user = models.ForeignKey('Users', models.DO_NOTHING)
+    user = models.ForeignKey('accounts.Users', models.DO_NOTHING)
     document_type = models.CharField(max_length=30)
     file_url = models.TextField()
     status = models.CharField(max_length=20, blank=True, null=True)
@@ -101,7 +101,7 @@ class KycDocuments(models.Model):
 
 class SystemLogs(models.Model):
     id = models.BigAutoField(primary_key=True)
-    user = models.ForeignKey('Users', models.DO_NOTHING, blank=True, null=True)
+    user = models.ForeignKey('accounts.Users', models.DO_NOTHING, blank=True, null=True)
     action = models.CharField(max_length=255)
     module = models.CharField(max_length=100)
     description = models.TextField(blank=True, null=True)
