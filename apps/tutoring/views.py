@@ -30,14 +30,14 @@ DEFAULT_LIMIT = 50
 MAX_LIMIT = 100
 
 DEFAULT_VALUES = {
-    SubjectCategories: {"status": "active"},
-    Subjects: {"status": "active"},
-    StudentPosts: {"status": "open", "moderation_status": "pending"},
-    TutorApplications: {"status": "pending"},
-    Classes: {"status": "active"},
-    Schedules: {"status": "scheduled"},
-    Reviews: {"status": "visible"},
-    ReviewReports: {"status": "pending"},
+    SubjectCategories: {"status": "ACTIVE"},
+    Subjects: {"status": "ACTIVE"},
+    StudentPosts: {"status": "OPEN", "moderation_status": "PENDING"},
+    TutorApplications: {"status": "PENDING"},
+    Classes: {"status": "ACTIVE"},
+    Schedules: {"status": "UPCOMING"},
+    Reviews: {"status": "VISIBLE"},
+    ReviewReports: {"status": "PENDING"},
 }
 
 RESOURCE_CONFIGS = {
@@ -499,7 +499,7 @@ def apply_to_post(request, post_id):
                 {
                     "post_id": post_id,
                     "tutor_id": tutor_id,
-                    "status": payload.get("status", "pending"),
+                    "status": payload.get("status", "PENDING"),
                 },
             )
     except ValueError as exc:
@@ -530,7 +530,7 @@ def create_class_from_application(request, application_id):
             "start_date": payload.get("start_date"),
             "end_date": payload.get("end_date"),
             "tuition_fee": payload.get("tuition_fee") or application.post.preferred_fee,
-            "status": payload.get("status", "active"),
+            "status": payload.get("status", "ACTIVE"),
         }
 
         if not class_payload["start_date"]:
@@ -540,10 +540,10 @@ def create_class_from_application(request, application_id):
 
         with transaction.atomic():
             new_class = save_new_instance(Classes, class_payload)
-            application.status = "accepted"
+            application.status = "ACCEPTED"
             apply_defaults(application, creating=False)
             application.save()
-            StudentPosts.objects.filter(id=application.post_id).update(status="matched", updated_at=timezone.now())
+            StudentPosts.objects.filter(id=application.post_id).update(status="MATCHED", updated_at=timezone.now())
     except ValueError as exc:
         return error_response(str(exc))
     except Http404:

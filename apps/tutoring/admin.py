@@ -10,7 +10,7 @@ from .models import (
     SubjectCategories,
     Subjects,
     TutorApplications,
-    TutorSubjects,
+    # TutorSubjects,
 )
 
 
@@ -28,10 +28,10 @@ class SubjectsAdmin(admin.ModelAdmin):
     list_filter = ("status", "category")
 
 
-@admin.register(TutorSubjects)
-class TutorSubjectsAdmin(admin.ModelAdmin):
-    list_display = ("tutor", "subject", "created_at")
-    list_filter = ("subject",)
+# @admin.register(TutorSubjects)
+# class TutorSubjectsAdmin(admin.ModelAdmin):
+#     list_display = ("tutor", "subject", "created_at")
+#     list_filter = ("subject",)
 
 
 @admin.register(StudentPosts)

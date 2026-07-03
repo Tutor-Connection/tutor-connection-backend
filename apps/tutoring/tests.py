@@ -158,7 +158,7 @@ class TutoringApiTestCase(UnmanagedModelTablesMixin, TransactionTestCase):
             phone=f"{prefix}-{self.slug}",
             password_hash="not-used-in-tests",
             login_provider="email",
-            status="active",
+            status="ACTIVE",
             email_verified=True,
             phone_verified=True,
             created_at=self.now,
@@ -184,7 +184,7 @@ class TutoringApiTestCase(UnmanagedModelTablesMixin, TransactionTestCase):
         return SubjectCategories.objects.create(
             name=f"{name} {self.slug}",
             description=f"{name} category",
-            status="active",
+            status="ACTIVE",
             created_at=self.now,
             updated_at=self.now,
         )
@@ -194,7 +194,7 @@ class TutoringApiTestCase(UnmanagedModelTablesMixin, TransactionTestCase):
             category=category or self.category,
             name=f"{name} {uuid4().hex[:8]}",
             description=f"{name} subject",
-            status="active",
+            status="ACTIVE",
             created_at=self.now,
             updated_at=self.now,
         )
@@ -224,7 +224,7 @@ class TutoringApiTestCase(UnmanagedModelTablesMixin, TransactionTestCase):
             start_date=self.today,
             end_date=self.today + timedelta(days=30),
             tuition_fee=Decimal("250000.00"),
-            status="active",
+            status="ACTIVE",
             created_at=self.now,
             updated_at=self.now,
         )
